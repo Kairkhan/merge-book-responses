@@ -2,27 +2,20 @@
 
 namespace App\Providers;
 
+use App\Modules\Book\DTO\Book;
+use App\Modules\Book\Services\BookService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register()
     {
-        //
-    }
+        $this->app->tag(Book::getStrategies(), 'strategies');
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
+        $this->app->when(BookService::class)
+            ->needs('$strategies')
+            ->giveTagged('strategies');
+
+        $this->app->bind(\App\Modules\Book\Contracts\Services\BookService::class, BookService::class);
     }
 }
