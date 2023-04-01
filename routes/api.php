@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Modules\Book\Controllers\Api\v1\BooksController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/v1/books', [BooksController::class, 'index'])
+    ->name('v1.books.index');
